@@ -1,10 +1,80 @@
 #
 # This module handles inputs to the budget analyzer
 #
+from abc import ABCMeta, abstractmethod
+from Format import BOAFormat
+from Parser import BOAParser
+from Budget import DefaultBudget
+from collections import defaultdict
 
-from pandas import DataFrame, read_csv
+#
+# Input and Parser are identified by where the data is coming from
+# This is more useful than using types such as DateParser, MoneyParser
+#  since if it fails, we'll know who changed their input data's format
+#  and who uses similar data formats
+# Keeping a history of changes, we can expect (hopefully) to anticipate
+# change from who and when
+#
 
-class CSVInput(object):
+class Input(object, metaclass=ABCMeta):
+  """
+  Input objects refer to input data
+  for constructing a budget.
+
+  The input is instantiated with
+  an optional Format and Parser
+
+  lines can then be read from the input
+  data, formatted, and parsed into
+  output data suitable for a Budget.
+  """
+
+  @abstractmethod
+  def __init__(self, path, **kwargs):
+    """
+    path denotes the path to the input source to be read
+    currently there is only support for reading files
+    on disk.
+    """
+    pass
+
+  @abstractmethod
+  def readlines(self, **kw):
+    """
+    Read lines from the input
+    the output is expected to be a formatted
+    and parsed structure of data suitable
+    for an implementation of a Budget
+    """
+    pass
+
+
+class RawUserInput(Input):
+  pass
+
+class StreamingInput(Input):
+  pass
+
+class BOAInput(Input):
+  """
+   Processes CSV files from BOA
+
+  """
 
   def __init__(self, path, **kwargs):
-    res = read_csv(path, **kwargs)
+
+
+    fmt  = kwargs['format'] if 'format' in kwargs else BOAFormat
+    pars = kwargs['parser'] if 'parser' in kwargs else BOAParser
+    self.__path = path
+
+  def readlines(self):
+    """
+    A coroutine for reading a line at a time
+    """
+
+    with open(self.__path, 'r') as f:
+      seqno = 0
+
+      for line in f:
+        yield(fmt(pars(line)))

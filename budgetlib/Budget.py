@@ -1,5 +1,6 @@
 from pandas import DataFrame
 from abc import ABCMeta, abstractmethod
+from json import dumps, dump
 
 class Budget(object, metaclass=ABCMeta):
   """
@@ -46,6 +47,15 @@ class Budget(object, metaclass=ABCMeta):
 
   @abstractmethod
   def items(self):
+    """
+    """
+    pass
+
+  @abstractmethod
+  def write(self, write_path = '.'):
+    """
+    save the budget to write_path
+    """
     pass
 
 class DefaultBudget(Budget):
@@ -54,7 +64,51 @@ class DefaultBudget(Budget):
       This class is implemented using the datetime module.
       Keys are tuples of (datetime instances, seqno (ints))
   """
-  pass
+
+  def __init__(self, name):
+    """
+    Default Budget is given a name to identify it.
+    It contains a dict like object to store datetime - value pairs
+    """
+    self.__budget = {}
+    self.name = str(name)
+
+  def __getitem__(self, x):
+    return self.__budget[x]
+
+  def __iter__(self):
+    return iter(self.__budget)
+
+  def __len__(self):
+    return len(self.__budget)
+
+  def __setitem__(self, key, value):
+
+    if type(key) is datetime and type(value) is float:
+      self.__budget[key] = value
+
+    else:
+      err = "Bad key value pair\nkey: {}\nvalue: {}".format(str(key), str(value))
+      raise ValueError(err)
+
+  def __repr__(self):
+    return self.name
+
+  def __str__(self):
+    return dumps(self.__budget)
+
+  def values(self):
+    return self.__budget.values()
+
+  def keys(self):
+    return self.__budget.keys()
+
+  def items(self):
+    return self.__budget.items()
+
+  def write(self, write_path = 'budget.json'):
+    with open(write_path, 'w') as f:
+      dump(self__budget, f)
 
 class TimeIndexKeyBudget(Budget):
   """
