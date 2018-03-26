@@ -1,6 +1,7 @@
 This project allows a user to set up and analyze a budget.
 
-## Budget Analyzer
+Budget Analyzer
+===============
 Have no idea where your money is going? Always feel like you should have more money?
 Does it suck to be you? Well you are not alone! Budget Analyzer is here to help you map out your day to day
 expenses and help you to become more aware of your financial activity.
@@ -22,12 +23,15 @@ Answer the really deep questions in life:
 
 Don't suck, make it easier with Budget Analyzer
 
-## Development
+Development
+===============
 Don't suck. Contribute.
 
-### Dev Guidelines
+Dev Guidelines
+====
 
-## Testing
+Testing
+====
 We use pytest.
 
 Typical usage:
