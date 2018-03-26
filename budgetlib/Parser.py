@@ -22,17 +22,16 @@ class BOAParser(Parser):
     self.seqno = 0
     self.prev_date = None
 
-  def parse(self, seqno, line):
+  def parse(self, line):
     """
-      line is a line of entry to process from a file
+      line is a list of entries to process from a file
     """
-    time_t, desc, change, amt = line.split(',')
+    time_t, desc, change, amt = line
 
     try:
-
       dt = parser.parse(time_t)
-      ch = float(change)
-      am = float(amt)
+      ch = float(change.strip('" \n')) if len(change) > 0 else 0.0
+      am = float(amt.strip('" \n'))
 
       if self.prev_date == dt:
         self.seqno += 1
@@ -42,7 +41,7 @@ class BOAParser(Parser):
       self.prev_date = dt
 
     except:
-      return ()
+      raise
 
     return (dt, self.seqno, desc, ch, am)
 

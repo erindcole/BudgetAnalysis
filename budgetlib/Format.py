@@ -19,7 +19,7 @@ class BOAFormat(Format):
     """
       Validate and format data from input
     """
-    if type(line) != tuple and len(line) != 5:
+    if type(line) != tuple or len(line) != 5:
       raise ValueError('[Unexpected Input]\n{}'.format(str(line)))
 
     dt, seqno, desc, ch, amt = line

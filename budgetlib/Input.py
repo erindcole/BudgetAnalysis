@@ -5,6 +5,7 @@ from abc import ABCMeta, abstractmethod
 from . import BOAFormat
 from . import BOAParser
 from collections import defaultdict
+import csv
 
 #
 # Input and Parser are identified by where the data is coming from
@@ -14,7 +15,10 @@ from collections import defaultdict
 # Keeping a history of changes, we can expect (hopefully) to anticipate
 # change from who and when
 #
-
+# It would be wise to keep third party Input, Format, and Parser
+# implementations around. They should ideally be refactored into
+# simple primitives in a utils.py
+#
 class Input(object, metaclass=ABCMeta):
   """
   Input objects refer to input data
@@ -38,7 +42,7 @@ class Input(object, metaclass=ABCMeta):
     pass
 
   @abstractmethod
-  def readlines(self, **kw):
+  def _readlines(self, **kw):
     """
     Read lines from the input
     the output is expected to be a formatted
@@ -51,25 +55,27 @@ class Input(object, metaclass=ABCMeta):
 class BOAInput(Input):
   """
    Processes CSV files from BOA
+   An instance is iterable and will output parsed + formatted data
   """
 
   def __init__(self, path, **kwargs):
 
-    self.fmt  = kwargs['format'] if 'format' in kwargs else BOAFormat()
-    self.pars = kwargs['parser'] if 'parser' in kwargs else BOAParser()
+    self.__fmt  = kwargs['format'] if 'format' in kwargs else BOAFormat()
+    self.__pars = kwargs['parser'] if 'parser' in kwargs else BOAParser()
     self.__path = path
 
   def __iter__(self):
-    return self.readlines()
+    return self._readlines()
 
-  def readlines(self):
+  def _readlines(self):
     """
     A coroutine for reading a line at a time
     """
-
     with open(self.__path, 'r') as f:
-      for line in f:
-        yield self.fmt.format(self.pars.parse(line))
+      reader = csv.reader(f, delimiter=',')
+      for line in reader:
+        yield self.__fmt.format(self.__pars.parse(line))
+
 
 class RawUserInput(Input):
   pass
