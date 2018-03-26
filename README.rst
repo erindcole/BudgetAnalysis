@@ -13,6 +13,7 @@ Analyze correlations in purchases. If I buy x how likely am I to buy Y?
 See hidden trends in spending habits.
 
 Answer the really deep questions in life:
+
   * What is the meaning of *budget*? Hint: it is not 42.
   * Which came first: profit or the debt?
   * Can I afford to ... No, I can't. WHY!?
