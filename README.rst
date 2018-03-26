@@ -47,3 +47,6 @@ Typical usage:
     py.test -s test/budgetlib/test_suite.py::TestClass::test_func
 
 see the `pytest docs`_ for more info
+
+
+.. _pytest docs: http://pytest.org/latest/contents.html#toc
