@@ -1,6 +1,6 @@
 python-dateutil, pandas, pytest
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 # TODO:
 # See http://setuptools.readthedocs.io/en/latest/setuptools.html#basic-use
@@ -17,7 +17,8 @@ setup(
                 ],
     keywords='budget moneyz money finance',
     author=['M. Sandan', 'Erin Cole']
-    packages=['BudgetAnalyzer'],
+    packages = find_packages('budgetlib'),
+    package_dir = {'': 'budgetlib'},
     include_package_data = True,
     tests_require=['pytest >= 2.5.2'],
     install_requires=['py-dateutil']
