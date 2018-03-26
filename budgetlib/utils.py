@@ -10,3 +10,9 @@ def init_dec(fn):
     next(start)
     return start
   return inner
+
+def is_tuple(x):
+  return type(x) is tuple
+
+def expected_len(x, n):
+  return len(x) == n
