@@ -2,9 +2,8 @@
 # This module handles inputs to the budget analyzer
 #
 from abc import ABCMeta, abstractmethod
-from Format import BOAFormat
-from Parser import BOAParser
-from Budget import DefaultBudget
+from . import BOAFormat
+from . import BOAParser
 from collections import defaultdict
 
 #
