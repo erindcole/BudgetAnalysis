@@ -1,6 +1,5 @@
 from abc import abstractmethod, ABCMeta
-from pandas import DataFrame
-from dateutils import parser
+from dateutil import parser
 
 class Parser(object, metaclass = ABCMeta):
 

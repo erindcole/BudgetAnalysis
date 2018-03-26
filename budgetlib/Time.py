@@ -39,11 +39,11 @@ class TimeIndexKey(object):
 
   @values.setter
   def values(self, val):
-     isYear = lambda x: isinstance(x, Year)
-     res = {isYear(x) for x in val}
+    isYear = lambda x: isinstance(x, Year)
+    res = {isYear(x) for x in val}
 
-     if len(res) !=1 or False in res:
-      raise ValueError("TimeIndexKey must be instantiated with Year objects")
+    if len(res) !=1 or False in res:
+     raise ValueError("TimeIndexKey must be instantiated with Year objects")
 
     self.__value = val
 
@@ -255,7 +255,7 @@ class Day(object):
   def seqno(self):
     return self.__value
 
-  @seqno.setteer
+  @seqno.setter
   def seqno(self, no):
 
     isSeqNo = lambda x: isinstance(x, SequenceNo)
