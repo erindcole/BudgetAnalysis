@@ -31,5 +31,7 @@ Don't suck. Contribute.
 We use pytest because google.
 
 Run the test from the top level dir BudgetAnalysis/
+
 .. code:: 
+
   py.test -s tests/*
