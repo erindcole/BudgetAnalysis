@@ -1,4 +1,3 @@
-from pandas import DataFrame
 from abc import ABCMeta, abstractmethod
 from json import dumps, dump
 

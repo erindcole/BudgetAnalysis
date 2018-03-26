@@ -20,5 +20,5 @@ setup(
     packages=['BudgetAnalyzer'],
     include_package_data = True,
     tests_require=['pytest >= 2.5.2'],
-    install_requires=['python-dateutil']
+    install_requires=['py-dateutil']
 )
