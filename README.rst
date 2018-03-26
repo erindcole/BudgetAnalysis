@@ -28,10 +28,22 @@ Don't suck. Contribute.
 ### Dev Guidelines
 
 ## Testing
-We use pytest because google.
+We use pytest.
 
-Run the test from the top level dir BudgetAnalysis/
+Typical usage:
 
-.. code:: 
+.. code:: python
 
-  py.test -s tests/*
+    # test all the things! 
+    py.test -s tests/*
+
+    # run tests in this file
+    py.test -s tests/budgetlib/test_suite.py
+
+    # run TestClass in the the file
+    py.test -s tests/budgetlib/test_suite.py::TestClass
+
+    # just run a specific method in TestClass
+    py.test -s test/budgetlib/test_suite.py::TestClass::test_func
+
+see the `pytest docs`_ for more info
