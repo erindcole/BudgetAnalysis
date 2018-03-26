@@ -49,24 +49,19 @@ class Input(object, metaclass=ABCMeta):
     pass
 
 
-class RawUserInput(Input):
-  pass
-
-class StreamingInput(Input):
-  pass
-
 class BOAInput(Input):
   """
    Processes CSV files from BOA
-
   """
 
   def __init__(self, path, **kwargs):
 
-
-    fmt  = kwargs['format'] if 'format' in kwargs else BOAFormat
-    pars = kwargs['parser'] if 'parser' in kwargs else BOAParser
+    self.fmt  = kwargs['format'] if 'format' in kwargs else BOAFormat()
+    self.pars = kwargs['parser'] if 'parser' in kwargs else BOAParser()
     self.__path = path
+
+  def __iter__(self):
+    return self.readlines()
 
   def readlines(self):
     """
@@ -74,7 +69,16 @@ class BOAInput(Input):
     """
 
     with open(self.__path, 'r') as f:
-      seqno = 0
-
       for line in f:
-        yield(fmt(pars(line)))
+        yield self.fmt.format(self.pars.parse(line))
+
+class RawUserInput(Input):
+  pass
+
+class StreamingInput(Input):
+  pass
+
+class RESTInput(Input):
+  pass
+
+

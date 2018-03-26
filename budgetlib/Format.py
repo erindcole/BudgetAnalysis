@@ -15,17 +15,15 @@ class BOAFormat(Format):
           time              desc               change     amt
       09/01/2016, "BKOFAMERICA ATM WITHDRWL", "-7.00", "99999.99"
   """
+  def format(self, line):
+    """
+      Validate and format data from input
+    """
+    if type(line) != tuple and len(line) != 5:
+      raise ValueError('[Unexpected Input]\n{}'.format(str(line)))
 
-  @absractmethod
-  def __init__(self, time_t, desc, change, amt):
+    dt, seqno, desc, ch, amt = line
+    key = (dt, seqno)
+    val = (desc, ch, amt)
 
-    try:
-      dt = parser.parse(time_t)
-      ch = float(change)
-      am = float(amt)
-
-    except:
-      return ()
-
-    return (dt, desc, ch, am)
-
+    return (key, val)

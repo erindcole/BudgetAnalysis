@@ -84,7 +84,7 @@ class DefaultBudget(Budget):
 
   def __setitem__(self, key, value):
 
-    if type(key) is datetime and type(value) is float:
+    if type(key) is tuple and type(value) is float:
       self.__budget[key] = value
 
     else:
@@ -108,9 +108,12 @@ class DefaultBudget(Budget):
 
   def write(self, write_path = 'budget.json'):
     with open(write_path, 'w') as f:
-      dump(self__budget, f)
+      dump(self.__budget, f)
+
+
 
 class TimeIndexKeyBudget(Budget):
+
   """
   TimeIndexKeyBudget uses a TimeIndexKey to implement Budget.
   """
