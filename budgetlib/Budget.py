@@ -1,5 +1,6 @@
 from abc import ABCMeta, abstractmethod
 from json import dumps, dump
+from .utils import is_tuple, expected_len
 
 class Budget(object, metaclass=ABCMeta):
   """
@@ -83,11 +84,13 @@ class DefaultBudget(Budget):
 
   def __setitem__(self, key, value):
 
-    if type(key) is tuple and type(value) is float:
+    if is_tuple(key) and is_tuple(value) and\
+       expected_len(key, 2) and expected_len(value, 3):
+
       self.__budget[key] = value
 
     else:
-      err = "Bad key value pair\nkey: {}\nvalue: {}".format(str(key), str(value))
+      err = "[Bad key value pair]\n\tkey: {}\n\tvalue: {}".format(str(key), str(value))
       raise ValueError(err)
 
   def __repr__(self):
