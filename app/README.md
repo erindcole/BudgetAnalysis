@@ -2,3 +2,8 @@
 
 ##Dependencies:
 - flask
+export FLASK_APP=microblog.py
+
+- flask-wtf
+- flask-sqlalchemy
+- flask-migrate

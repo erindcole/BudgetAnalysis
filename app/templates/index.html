@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1> HEADERRRRRRRR GRGR gRGRGRg {{ user.username }} !</h1>
+    <p> Hi I'm just a paragraph in the body</p>
+    {% for thing in purchases %}
+    <div> 
+      <p> {{thing.user.username}}: <b>{{thing.description}}</b>  <b>{{thing.cost}}</b>
+    </div>
+    {% endfor %}
+
+{% endblock %}
