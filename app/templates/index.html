@@ -1,12 +1,39 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1> HEADERRRRRRRR GRGR gRGRGRg {{ user.username }} !</h1>
-    <p> Hi I'm just a paragraph in the body</p>
-    {% for thing in purchases %}
-    <div> 
-      <p> {{thing.user.username}}: <b>{{thing.description}}</b>  <b>{{thing.cost}}</b>
-    </div>
+    <h1>Welcome, {{ current_user.username }}! Let's get the money.</h1>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.title.label }}<br>
+            {{ form.title(cols=70, rows=1) }}<br>
+            {% for error in form.title.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.post.label }}<br>
+            {{ form.post(cols=32, rows=4) }}<br>
+            {% for error in form.post.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+
+    {% for post in posts %}
+
+      <h2>{{ post.title }}</h2> 
+      <p><b>{{ post.body }}</b></p>
+
     {% endfor %}
 
+   {% if prev_url %}
+    <a href="{{ prev_url }}">Newer posts</a>
+    {% endif %}
+    {% if next_url %}
+    <a href="{{ next_url }}">Older posts</a>
+    {% endif %}
+
+    {# possibly more here like news, links, other blog posts, etc. #}
 {% endblock %}
