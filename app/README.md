@@ -8,7 +8,8 @@ export FLASK_APP=microblog.py
 - flask-sqlalchemy
 - flask-migrate
 
--flask-login
+- flask-login
+- flask-bootstrap
 
 ##Starting the Server
 export FLASK_APP=microblog.py
