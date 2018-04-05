@@ -1,67 +1,47 @@
 from app import app
 from flask import render_template, flash, redirect, url_for, request
-from app.forms import LoginForm, EditProfileForm, PostForm
+from app.forms import LoginForm, EditProfileForm, PostForm, ExploreForm
 from app.models import User, Post
 from flask_login import login_required, current_user, login_user, logout_user
 from werkzeug.urls import url_parse
 from app import db
 from app.forms import RegistrationForm
 from datetime import datetime
-
-
-# mock some objects
-user1 = {'username': 'metal man'}
-user2 = {'username': 'metal woman'}
-
-# good old mock html template
-page = '''
-<html>
-  <head>
-    <title> This is the Title </title>
-    <p> paragraph in the header? </p>
-  <head>
-
-  <body>
-    <h1>This is the header in the body: Hello {} !</h1>
-    <p>This is a paragraph in the body</p>
-  </body>
-</html>
-'''.format(user1['username'])
-
-recent_purchases = [{
-                      'user': user1,
-                      'description': "shit you didn't need",
-                      'cost': 9999999999.99
-                    },
-                    {
-                      'user': user2,
-                      'description': "that good good",
-                      'cost': "a billion dollars"
-                    }]
+import json
+from budgetlib import DefaultBudget, BOAInput
 
 # Note: login_required makes the view accessible iff the user is logged in.
 #       current_user is a flask global for the user currently logged in
 
-#@app.route('/')
-#@app.route('/index')
-#@login_required
-#def index():
-#  return render_template('index.html',
-#                         title = 'the sickest title',
-#                         purchases = recent_purchases)
+@app.route('/explore', methods=['GET', 'POST'])
+@login_required
+def explore():
+
+  form = ExploreForm()
+  if form.validate_on_submit():
+
+    # instantiate their budget
+    budget = DefaultBudget(current_user.username,\
+                         { (x, y) for x, y in BOAInput(path=form.data_path.data) })
+    data = budget.__str__()
+    #return render_template('explore.html', form=form, raw_data=data)
+    return data
+
+  return render_template('explore.html', form=form, raw_data=None)
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
     form = PostForm()
-    if form.validate_on_submit():
+    if form.validate_on_submit(): #add a new post
         post = Post(title=form.title.data, body=form.post.data, author=current_user)
         db.session.add(post)
         db.session.commit()
         flash('Your post is now live!')
         return redirect(url_for('index'))
 
+    # load posts
     page = request.args.get('page', 1, type=int)
 
     # see config.py for setting POSTS_PER_PAGE
@@ -72,8 +52,6 @@ def index():
     return render_template('index.html', title='Home', form=form,
                            posts=posts.items, next_url=next_url,
                            prev_url=prev_url)
-
-
 
 @app.route('/logout')
 def logout():
