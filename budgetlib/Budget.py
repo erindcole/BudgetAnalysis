@@ -65,12 +65,12 @@ class DefaultBudget(Budget):
       Keys are tuples of (datetime instances, seqno (ints))
   """
 
-  def __init__(self, name):
+  def __init__(self, name, processed_data={}):
     """
     Default Budget is given a name to identify it.
     It contains a dict like object to store datetime - value pairs
     """
-    self.__budget = {}
+    self.__budget = processed_data
     self.name = str(name)
 
   def __getitem__(self, x):
@@ -97,7 +97,7 @@ class DefaultBudget(Budget):
     return self.name
 
   def __str__(self):
-    return dumps(self.__budget)
+    return dumps(self.__budget, default=str)
 
   def values(self):
     return self.__budget.values()
