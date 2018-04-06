@@ -29,7 +29,8 @@ class BOAParser(Parser):
     time_t, desc, change, amt = line
 
     try:
-      dt = parser.parse(time_t)
+      # parse and re-format, should prolly abstract this
+      dt = parser.parse(time_t).strftime('%m/%d/%Y')
       ch = float(change.strip('" \n')) if len(change) > 0 else 0.0
       am = float(amt.strip('" \n'))
 

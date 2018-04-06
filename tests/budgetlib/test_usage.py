@@ -48,7 +48,7 @@ def test_load_csv_data():
       #   (dt, seqno)
 
       assert len(key) == 2
-      assert type(key[0]) == datetime
+      assert type(key[0]) == str
       assert type(key[1]) == int
 
       # test value structure
