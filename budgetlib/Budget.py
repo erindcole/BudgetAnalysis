@@ -65,7 +65,7 @@ class DefaultBudget(Budget):
       Keys are tuples of (datetime instances, seqno (ints))
   """
 
-  def __init__(self, name, processed_data={}):
+  def __init__(self, name, processed_data=dict({})):
     """
     Default Budget is given a name to identify it.
     It contains a dict like object to store datetime - value pairs
@@ -97,7 +97,20 @@ class DefaultBudget(Budget):
     return self.name
 
   def __str__(self):
-    return dumps(self.__budget, default=str)
+    """
+    return as json
+    [
+      {
+        "key": [ {"date": date, "seqno": seqno} ],
+        "values": [ { "description": ..., "change": ..., "total": ... } ],
+      }
+    ]
+    """
+    data = [ dict( {'key': [ x[0], x[1] ],\
+                    'values': [ dict( { 'description': y[0], 'change': y[1] , 'total': y[2] }) ] } )\
+             for x, y in self.__budget.items() ]
+
+    return dumps(data)
 
   def values(self):
     return self.__budget.values()

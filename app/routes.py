@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, jsonify
 from app.forms import LoginForm, EditProfileForm, PostForm, ExploreForm
 from app.models import User, Post
 from flask_login import login_required, current_user, login_user, logout_user
@@ -22,10 +22,10 @@ def explore():
 
     # instantiate their budget
     budget = DefaultBudget(current_user.username,\
-                         { (x, y) for x, y in BOAInput(path=form.data_path.data) })
+                         dict({ (x, y) for x, y in BOAInput(path=form.data_path.data) }))
     data = budget.__str__()
     #return render_template('explore.html', form=form, raw_data=data)
-    return data
+    return jsonify(data)
 
   return render_template('explore.html', form=form, raw_data=None)
 
