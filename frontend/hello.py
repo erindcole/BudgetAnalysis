@@ -22,6 +22,8 @@ def json_read():
     x = {'x': ['01/01/2018', '01/02/2018', '01/05/2018', '01/19/2018', '02/04/2018', '03/05/2018']}
     income = {'income': [30, 200, 100, 400, 150, 250]}
     expense = {'expense': [50, 20, 10, 40, 15, 25]}
+
+
     return render_template('load_from_json.html', x=json.dumps(x), income=json.dumps(income), expense=json.dumps(expense))
 
 ########################################################################
@@ -43,6 +45,35 @@ def json_endpoint():
     return jsonify(data)
 ########################################################################
 
+@app.route('/calendar')
+def calendar_view():
+    data = [\
+      { 'Date': '2010-10-01',
+         'Open': 10789.72,
+         'High': 10907.41,
+         'Low': 10759.14,
+         'Close': 10829.68,
+         'Volume': 4298910000,
+         'Adj Close': 10829.68
+      },
+      { 'Date': '2010-09-30',
+         'Open': 10835.96,
+         'High': 10960.99,
+         'Low': 10732.27,
+         'Close': 10788.05,
+         'Volume': 4284160000,
+         'Adj Close': 10788.05
+      },
+      { 'Date': '2010-09-29',
+         'Open': 10857.98,
+         'High': 10901.96,
+         'Low': 10759.75,
+         'Close': 10835.28,
+         'Volume': 3990280000,
+         'Adj Close': 10835.28
+      }
+    ]
+    return render_template('index.html', calendar_data=json.dumps(data))
 
 
 

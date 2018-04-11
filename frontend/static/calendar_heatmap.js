@@ -1,6 +1,5 @@
+function calendar_heatmap(cal_data) {
 
-  <script src="http://d3js.org/d3.v3.js"></script>
-  <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
     var width = 960,
         height = 750,
         cellSize = 25; // cell size
@@ -21,7 +20,7 @@
         .domain([-.05, .05])
         .range(d3.range(11).map(function(d) { return "q" + d + "-11"; }));
 
-    var svg = d3.select("#chart").selectAll("svg")
+    var svg = d3.select("#calendar_chart").selectAll("svg")
         .data(d3.range(2008, 2011))
       .enter().append("svg")
         .attr("width", width)
@@ -84,11 +83,10 @@
       .style("visibility", "hidden")
       .text("a simple tooltip");
 
-    d3.csv("dji.csv", function(error, csv) {
       var data = d3.nest()
         .key(function(d) { return d.Date; })
         .rollup(function(d) { return (d[0].Close - d[0].Open) / d[0].Open; })
-        .map(csv);
+        .map(cal_data);
 
       rect.filter(function(d) { return d in data; })
           .attr("class", function(d) { return "day " + color(data[d]); })
@@ -118,14 +116,13 @@
         $tooltip.empty();
       }
 
-    });
-
-    function dayTitle (t0) {
-      return t0.toString().split(" ")[2];
-    }
-    function monthTitle (t0) {
-      return t0.toLocaleString("en-us", { month: "long" });
-    }
-    function yearTitle (t0) {
-      return t0.toString().split(" ")[3];
-    }
+}
+function dayTitle (t0) {
+  return t0.toString().split(" ")[2];
+}
+function monthTitle (t0) {
+  return t0.toLocaleString("en-us", { month: "long" });
+}
+function yearTitle (t0) {
+  return t0.toString().split(" ")[3];
+}
