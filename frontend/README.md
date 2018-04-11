@@ -2,15 +2,6 @@
 - c3
 - d3
 
-Produce line charts for the data:
-
-date
-  seqno
-
-description
-change
-total
-
 ### area- line chart
 - expenses per day
 - income per day
@@ -37,11 +28,16 @@ break down expenses by category
 - filter data based on date-ranges
 - income/expense ratio for a given day
 
+### calendar heat-map
+- heatmap by year
+
 #### Playbook
 The playbook tells you, according to your data, how much you have left every frequency f (months, bi-weekly, etc.) after bills are paid and payday deposited.
 Once you understand that, you can more wisely spend or save your money depending on your goals.
 How much money would I have if all expenses were 0? Over a given date range?
 What do my total expenses add up to in a year?
 After paydays and bills, if I want to save for a down payment of $s in z years, how many times x can I go out and spend an average of y dollars?
+
+The general question that needs answering is, given these goals, these (unavoidable recurring) expenses, and income. How much money will I have left over after a certain time? Is it enought to meet the goals? If so, how much can I still spend and still meet the goals?
 
 
