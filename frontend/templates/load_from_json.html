@@ -11,15 +11,15 @@
 
     <script src="static/c3.min.js"></script>
     <script src="{{url_for('static', filename='area_line_charts.js')}}" type='text/javascript'></script>
-    <script src="{{url_for('static', filename='calendar_heatmap.js')}}" type='text/javascript'></script>
+    <script src="{{url_for('static', filename='pie.js')}}" type='text/javascript'></script>
     <div id="chart"></div>
-    <div id="calendar_chart" class="clearfix"></div>
+    <div id="chart_pie"></div>
 
 </head>
 <body>
 <script>
 draw_area_line_chart({{x | safe}}, {{income | safe}}, {{expense | safe}});
-calendar_heatmap({{calendar_data |safe }});
+draw_pie({{pie | safe}});
 </script>
 </body>
 </html>

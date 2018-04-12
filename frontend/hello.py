@@ -23,8 +23,15 @@ def json_read():
     income = {'income': [30, 200, 100, 400, 150, 250]}
     expense = {'expense': [50, 20, 10, 40, 15, 25]}
 
+    expenses = [{"name":"jim","amount":34,"date":"11/12/2015"},
+      {"name":"carl","amount":120.11,"date":"11/12/2015"},
+      {"name":"jim","amount":45,"date":"12/01/2015"},
+      {"name":"stacy","amount":12.00,"date":"01/04/2016"},
+      {"name":"stacy","amount":34.10,"date":"01/04/2016"},
+      {"name":"stacy","amount":44.80,"date":"01/05/2016"}
+    ]
 
-    return render_template('load_from_json.html', x=json.dumps(x), income=json.dumps(income), expense=json.dumps(expense))
+    return render_template('load_from_json.html', pie=json.dumps(expenses), x=json.dumps(x), income=json.dumps(income), expense=json.dumps(expense))
 
 ########################################################################
 # not going thru with this route
@@ -41,10 +48,12 @@ def json_endpoint():
     x = {'x': ['01/01/2018', '01/02/2018', '01/05/2018', '01/19/2018', '02/04/2018', '03/05/2018']}
     income = {'income': [30, 200, 100, 400, 150, 250]}
     expense = {'expense': [50, 20, 10, 40, 15, 25]}
+
     data = dict({ 'x':x['x'], 'income':income['income'], 'expense':expense['expense'] })
     return jsonify(data)
 ########################################################################
 
+# this has some library issues with the area_line_chart example
 @app.route('/calendar')
 def calendar_view():
     data = [\
@@ -73,9 +82,11 @@ def calendar_view():
          'Adj Close': 10835.28
       }
     ]
+
     return render_template('index.html', calendar_data=json.dumps(data))
 
 
+############################################################################
 
 # Chart.js
 @app.route("/simple_chart")
